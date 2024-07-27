@@ -1,5 +1,3 @@
-
-
 import pygame as pg
 import Grid
 import Loop
@@ -24,7 +22,9 @@ while running:
     screen.fill((59,92,150))
     screen.blit(bg_img, (0,0))
 
-    screen.blit(Grid.draw(), (10,10))
+    Grid.draw(screen), (10,10)
+
+
 
     running = Loop.tick()
 
