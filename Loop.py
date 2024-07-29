@@ -1,6 +1,6 @@
 from asyncio import Event
 from pygame import Vector2
-import States
+import Global
 import pygame as pg
 
 
@@ -11,14 +11,18 @@ def tick():
         if event.type == pg.QUIT:
             return False
         
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            print(event.pos)
+            print(event.pos, Global.mouse_to_cell(event.pos))
+
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
-            States.camera_click_pos = event.pos
+            Global.camera_click_pos = event.pos
 
         if event.type == pg.MOUSEBUTTONUP and event.button == 2:
-            States.camera_last_offset = States.camera_offset
+            Global.camera_last_offset = Global.camera_offset
         
         if pg.mouse.get_pressed()[1]:
-            States.camera_offset = Vector2(*event.pos) - (States.camera_click_pos - States.camera_last_offset)
+            Global.camera_offset = Vector2(*event.pos) - (Global.camera_click_pos - Global.camera_last_offset)
         
     return True
 
