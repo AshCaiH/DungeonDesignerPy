@@ -1,5 +1,8 @@
 from pygame import Vector2
 
+SCR_WDTH = 800
+SCR_HGHT = 640
+
 # Settings
 
 ROWS = 10
@@ -22,3 +25,6 @@ def mouse_to_cell(mousepos):
     world_pos = mouse_to_world(mousepos)
     cell_pos = Vector2(world_pos.x // CELL_SIZE, world_pos.y // CELL_SIZE)
     return cell_pos
+
+def cell_to_position(cell_coord: Vector2):
+    return cell_coord * CELL_SIZE + camera_offset
