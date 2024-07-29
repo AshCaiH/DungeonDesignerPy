@@ -1,8 +1,8 @@
 from pygame import Vector2
 import pygame as pg
-import Global
+import Global, Cursor
 
-screen = pg.Surface((Global.SCR_WDTH, Global.SCR_HGHT), pg.SRCALPHA)
+screen = None
 
 grid_dict = {}
 
@@ -22,7 +22,7 @@ def draw_floors():
     for key in grid_dict.keys():
         if grid_dict[key].get("floor", 0) != 0:
             pg.draw.rect(screen, (255,255,255, 150),
-                        pg.Rect(*Global.cell_to_position(Vector2(*key)), Global.CELL_SIZE, Global.CELL_SIZE))
+                        pg.Rect(*Global.cell_to_screen(Vector2(*key)), Global.CELL_SIZE, Global.CELL_SIZE))
 
 
 def draw_props():

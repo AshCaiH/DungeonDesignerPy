@@ -1,8 +1,7 @@
 from asyncio import Event
 from pygame import Vector2
-import Global
+import Grid, Cursor, Global
 import pygame as pg
-import Grid
 
 
 def tick():
@@ -12,8 +11,16 @@ def tick():
         if event.type == pg.QUIT:
             return False
         
+        if event.type == pg.MOUSEMOTION:
+            Cursor.move(event.pos)
+        
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             Grid.add_floor(Global.mouse_to_cell(event.pos))
+
+        # FOR TESTING ONLY, REMOVE WHEN NO LONGER NEEDED
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 3:
+            print(Cursor.inner_pos)
+        # ###
 
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
             try:

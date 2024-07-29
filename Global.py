@@ -7,7 +7,8 @@ SCR_HGHT = 640
 
 ROWS = 10
 COLS = 10
-CELL_SIZE = 64
+CELL_SIZE = 32
+WALL_COLLISION = 3
 GRID_COLOUR = (255,255,255, 100)
 
 # Runtime values
@@ -26,5 +27,5 @@ def mouse_to_cell(mousepos):
     cell_pos = Vector2(world_pos.x // CELL_SIZE, world_pos.y // CELL_SIZE)
     return cell_pos
 
-def cell_to_position(cell_coord: Vector2):
+def cell_to_screen(cell_coord: Vector2):
     return cell_coord * CELL_SIZE + camera_offset

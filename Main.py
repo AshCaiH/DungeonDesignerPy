@@ -1,7 +1,5 @@
 import pygame as pg
-import Grid
-import Loop
-import Global
+import Global, Grid, Loop, Cursor
 
 pg.init()
 
@@ -23,7 +21,7 @@ while running:
 
     screen.blit(Grid.draw(), (0,0))
 
-
+    screen.blit(Cursor.draw(), (0,0))
 
     running = Loop.tick()
 
