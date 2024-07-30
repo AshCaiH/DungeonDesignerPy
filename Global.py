@@ -10,12 +10,24 @@ COLS = 10
 CELL_SIZE = 32
 WALL_COLLISION = 3
 GRID_COLOUR = (255,255,255, 100)
+CURSOR_SIZE = 5
 
 # Runtime values
 
 camera_offset = Vector2(10,10)
 camera_last_offset = camera_offset
 camera_click_pos = Vector2(0,0)
+
+# Static hidden values
+
+hexagon = [
+    Vector2(0,0),
+    Vector2(CURSOR_SIZE, CURSOR_SIZE),
+    Vector2(CELL_SIZE-CURSOR_SIZE, CURSOR_SIZE),
+    Vector2(CELL_SIZE, 0),
+    Vector2(CELL_SIZE-CURSOR_SIZE, -CURSOR_SIZE),
+    Vector2(CURSOR_SIZE, -CURSOR_SIZE),
+]
 
 # Functions
 def mouse_to_world(mousepos):
