@@ -6,6 +6,7 @@ screen = None
 
 cell_dict : dict = {}
 
+
 def draw():
     global screen
     screen = pg.Surface((Global.SCR_WDTH, Global.SCR_HGHT), pg.SRCALPHA)
@@ -16,6 +17,7 @@ def draw():
     draw_walls()
 
     return screen
+
 
 def draw_floors():
     for key in cell_dict.keys():
@@ -54,14 +56,16 @@ def draw_grid():
         y = i * Global.CELL_SIZE + Global.camera_offset.y
         pg.draw.line(screen, Global.GRID_COLOUR, 
                      (0 + Global.camera_offset.x, y), (Global.COLS * Global.CELL_SIZE + Global.camera_offset.x, y))
-        
+
+
 def add_floor(cell_coord):
     cell_dict.setdefault((cell_coord.x, cell_coord.y), {})
     cell_dict[(cell_coord.x, cell_coord.y)]["floor"] = 1
 
+
+# Remove empty cells from dictionary.
 def clean_cells():
     global cell_dict
-    # Remove empty cells from dictionary.
     def nonzero_value(item): return item[1] != 0
 
     for key in cell_dict.keys():
@@ -71,6 +75,9 @@ def clean_cells():
     def contains_keys(cells : dict): return len(cells[1].keys()) > 0
     
     cell_dict = dict(filter(contains_keys, cell_dict.items()))
+
+    print(len(cell_dict))
+
 
 # Modes: 0 = off, 1 = on, 2 = toggle
 def set_cell(cell_coord, element_state = 2):
