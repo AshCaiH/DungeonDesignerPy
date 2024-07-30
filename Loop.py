@@ -15,12 +15,7 @@ def tick():
             Cursor.move(event.pos)
         
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            Grid.add_floor(Global.mouse_to_cell(event.pos))
-
-        # FOR TESTING ONLY, REMOVE WHEN NO LONGER NEEDED
-        if event.type == pg.MOUSEBUTTONDOWN and event.button == 3:
-            print(Cursor.inner_pos)
-        # ###
+            Grid.set_cell(Cursor.cell_pos)
 
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
             try:

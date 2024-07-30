@@ -36,11 +36,8 @@ def draw():
     global screen
     screen = pg.Surface((Global.SCR_WDTH, Global.SCR_HGHT), pg.SRCALPHA)
 
-    # # Code for rotating the wall cursor
     def rotate_points(point):
         return pg.math.Vector2(point).rotate(90)
-
-    # hexagon = list(map(rotate_points, Global.hexagon))
 
     def hex_to_screen(vec):
         return tuple(vec + Global.cell_to_screen(cell_pos))
