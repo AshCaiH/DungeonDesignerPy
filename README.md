@@ -17,7 +17,7 @@ You'll need to create your own functions to parse the generated .dun files in yo
 
 *Please note*: This format will change with future versions as more features need to be accounted for, but attempts may be made to maintain backwards compatibility for loading files within Dungeon Designer.
 
-Each tile has a floor, a northern wall and a western wall. Southern and eastern walls can be provided by the northern/western walls of adjacent tiles. For more information please read [this post on Red Blob Games' website](https://www.redblobgames.com/grids/edges/#coordinates).
+Each tile has a floor, a northern wall and a western wall. Southern and eastern walls can be provided by the northern/western walls of adjacent tiles. For more detailed information please read [this post on Red Blob Games' website](https://www.redblobgames.com/grids/edges/#coordinates) which Dungeon Designer has taken inspiration from.
 
 ```json
 {

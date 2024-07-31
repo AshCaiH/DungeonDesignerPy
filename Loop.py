@@ -27,10 +27,8 @@ def tick():
         
         elif event.type == pg.MOUSEBUTTONDOWN and event.button == 2:            
             try:
-                print("middle mouse down")
                 Global.camera_click_pos = event.pos
             except AttributeError:
-                print("ARHGHGHGHGH")
                 pass
 
         elif event.type == pg.MOUSEBUTTONUP and event.button == 2:

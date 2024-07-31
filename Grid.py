@@ -76,8 +76,6 @@ def clean_cells():
     
     cell_dict = dict(filter(contains_keys, cell_dict.items()))
 
-    print(len(cell_dict))
-
 
 # Modes: 0 = off, 1 = on, 2 = toggle
 def set_cell(cell_coord, element_state = 2):
