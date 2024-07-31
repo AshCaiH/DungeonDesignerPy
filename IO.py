@@ -17,5 +17,3 @@ def load_file():
     loaded = {literal_eval(key): value for key, value in loaded.items()}
 
     Grid.cell_dict = loaded
-
-    print(loaded)

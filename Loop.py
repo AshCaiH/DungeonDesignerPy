@@ -15,22 +15,7 @@ def tick():
             Cursor.move(event.pos)
         
         elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            Grid.set_cell(Cursor.cell_pos)
-
-        elif event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
-            try:
-                Global.camera_click_pos = event.pos
-            except AttributeError:
-                pass
-
-        elif event.type == pg.MOUSEBUTTONUP and event.button == 2:
-            Global.camera_last_offset = Global.camera_offset
-        
-        elif pg.mouse.get_pressed()[1]:
-            try:
-                Global.camera_offset = Vector2(*event.pos) - (Global.camera_click_pos - Global.camera_last_offset)
-            except AttributeError:
-                pass
+            Grid.set_cell(Cursor.cell_pos)        
 
         elif event.type == pg.KEYDOWN:
             mods = pg.key.get_mods()
@@ -39,6 +24,22 @@ def tick():
                 IO.save_file()
             elif mods & pg.KMOD_CTRL and event.key == pg.K_l:
                 IO.load_file()
+        
+        elif event.type == pg.MOUSEBUTTONDOWN and event.button == 2:            
+            try:
+                print("middle mouse down")
+                Global.camera_click_pos = event.pos
+            except AttributeError:
+                print("ARHGHGHGHGH")
+                pass
+
+        elif event.type == pg.MOUSEBUTTONUP and event.button == 2:
+            Global.camera_last_offset = Global.camera_offset
+        
+        # Always check this
+        if pg.mouse.get_pressed()[1]:
+            try: Global.camera_offset = Vector2(*event.pos) - (Global.camera_click_pos - Global.camera_last_offset)
+            except AttributeError: pass
         
     return True
 
