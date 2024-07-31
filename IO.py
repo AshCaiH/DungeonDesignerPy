@@ -3,15 +3,16 @@ import json
 from ast import literal_eval
 
 def save_file():
-    print("Saving...")
+    file = open("levels/map1.dun", "w+")
+    json.dump({str(key): value for key, value in Grid.cell_dict.items()}, file)
 
-    print(json.dumps({str(key): value for key, value in Grid.cell_dict.items()}))
+    print("Saved")
 
 
 def load_file():
     print("Loading...")
 
-    loaded = json.loads('{"(5.0, 5.0)": {"floor": 1, "nwall": 1, "wwall": 1}, "(6.0, 5.0)": {"floor": 1, "nwall": 1}, "(6.0, 6.0)": {"floor": 1}, "(7.0, 6.0)": {"wwall": 1}, "(6.0, 7.0)": {"nwall": 1}}')
+    loaded = json.load(open("levels/map1.dun", "r"))
 
     loaded = {literal_eval(key): value for key, value in loaded.items()}
 
