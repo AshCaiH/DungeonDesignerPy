@@ -83,6 +83,7 @@ def set_cell(cell_coord, element_state = 2):
     cell_dict.setdefault((cell_coord.x, cell_coord.y), {})
 
     element = None
+    return_state = None
 
     match Cursor.mode:
         case 1: element = "floor" 
@@ -91,15 +92,22 @@ def set_cell(cell_coord, element_state = 2):
         case 4: element = "prop" 
         case _: return
     
+    if element_state == 0: cell_dict[(cell_coord.x, cell_coord.y)][element] = 0
+    if element_state == 1: cell_dict[(cell_coord.x, cell_coord.y)][element] = 1
     if element_state == 2:
         try:
             if cell_dict[(cell_coord.x, cell_coord.y)][element] in [0, None]:
                 cell_dict[(cell_coord.x, cell_coord.y)][element] = 1
+                return_state = 1
             else:
                 cell_dict[(cell_coord.x, cell_coord.y)][element] = 0
+                return_state = 0
         except KeyError:
             cell_dict[(cell_coord.x, cell_coord.y)][element] = 1
+            return_state = 1
     else:
         cell_dict[(cell_coord.x, cell_coord.y)][element] = element_state
 
     clean_cells()
+
+    return return_state

@@ -22,46 +22,49 @@ def get_cursor_type():
     near_wwall = False
     offset = Vector2(0, 0)
 
-    # Check if cursor is in grid (with buffer for grid edges)
-    if cell_pos.x >= Global.COLS + 1 or cell_pos.x < -1 \
-    or cell_pos.y >= Global.ROWS + 1 or cell_pos.y < -1:
-        return 0
-    
-    
-    def check_near_wall(inner_pos_axis, offset_axis):
-        if inner_pos_axis > Global.CELL_SIZE - Global.CURSOR_SIZE:
-            if offset_axis == "x": offset.x = 1
-            elif offset_axis == "y": offset.y = 1
-            return True
-        elif inner_pos_axis < Global.CURSOR_SIZE: return True
-        else: return False    
+    if override_mode is None or override_mode in [2,3]:
+        # Check if cursor is in grid (with buffer for grid edges)
+        if cell_pos.x >= Global.COLS + 1 or cell_pos.x < -1 \
+        or cell_pos.y >= Global.ROWS + 1 or cell_pos.y < -1:
+            return 0
+        
+        
+        def check_near_wall(inner_pos_axis, offset_axis):
+            if inner_pos_axis > Global.CELL_SIZE - Global.CURSOR_SIZE:
+                if offset_axis == "x": offset.x = 1
+                elif offset_axis == "y": offset.y = 1
+                return True
+            elif inner_pos_axis < Global.CURSOR_SIZE: return True
+            else: return False    
 
-    near_nwall = check_near_wall(inner_pos.y, "y")
-    near_wwall = check_near_wall(inner_pos.x, "x")
+        
+        near_nwall = check_near_wall(inner_pos.y, "y")
+        near_wwall = check_near_wall(inner_pos.x, "x")
 
 
-    # If near both walls, prioritise last wall touched, otherwise prioritise north wall.
-    # Prevents cursor "flickering" between both modes when moving it along a grid edge.
-    if near_nwall and (not near_wwall or previous_mode == 2):
-        cell_pos.y += offset.y
+        # If near both walls, prioritise last wall touched, otherwise prioritise north wall.
+        # Prevents cursor "flickering" between both modes when moving it along a grid edge.
+        if near_nwall and (not near_wwall or previous_mode == 2):
+            cell_pos.y += offset.y
 
-        if not (cell_pos.y >= Global.ROWS + 1 or cell_pos.y + offset.y < 0) \
-        and not (cell_pos.x >= Global.COLS or cell_pos.x < 0):
-            return 2
-    
-    if near_wwall and (not near_nwall or previous_mode == 3):
-        cell_pos.x += offset.x
+            if not (cell_pos.y >= Global.ROWS + 1 or cell_pos.y + offset.y < 0) \
+            and not (cell_pos.x >= Global.COLS or cell_pos.x < 0):
+                return 2
+        
+        if near_wwall and (not near_nwall or previous_mode == 3):
+            cell_pos.x += offset.x
 
-        if not (cell_pos.x >= Global.COLS + 1 or cell_pos.x + offset.x < 0) \
-        and not (cell_pos.y >= Global.ROWS or cell_pos.y < 0):
-            return 3
+            if not (cell_pos.x >= Global.COLS + 1 or cell_pos.x + offset.x < 0) \
+            and not (cell_pos.y >= Global.ROWS or cell_pos.y < 0):
+                return 3
     
     # Check if cursor is within grid again but without the buffer zone
     if cell_pos.x >= Global.COLS or cell_pos.x < 0 \
     or cell_pos.y >= Global.ROWS or cell_pos.y < 0:
         return 0
 
-    return 1
+    if override_mode is None or override_mode == 1:
+        return 1
 
 
 def move(mouse_pos):

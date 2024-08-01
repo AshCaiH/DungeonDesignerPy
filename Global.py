@@ -18,6 +18,8 @@ camera_offset = Vector2(10,10)
 camera_last_offset = camera_offset
 camera_click_pos = Vector2(0,0)
 
+set_state = None
+
 # Static hidden values
 
 hexagon = [
