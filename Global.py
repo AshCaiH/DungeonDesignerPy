@@ -1,4 +1,4 @@
-from pygame import Vector2
+from pygame import Vector2, Rect
 
 SCR_WDTH = 800
 SCR_HGHT = 640
@@ -11,6 +11,7 @@ CELL_SIZE = 32
 WALL_COLLISION = 3
 GRID_COLOUR = (0,0,0, 100)
 CURSOR_SIZE = 5
+PALETTE_RECT = Rect(0,0,0,0)
 
 # Runtime values
 

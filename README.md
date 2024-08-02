@@ -9,7 +9,9 @@ The project is in its very early stages right now and is being made to support a
 
 ## Documentation
 
-Currently the focus is on building the tool and full documentation may come later.
+As the project will change throughout development, full documentation may come later.
+
+Files can be loaded and saved with CTRL+L and CTRL+S respectively. The output file will be saved to ./levels/map1.dun. A more fleshed out save/load system may be added later.
 
 You'll need to create your own functions to parse the generated .dun files in your own projects.
 
