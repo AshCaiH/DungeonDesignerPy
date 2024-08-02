@@ -8,36 +8,16 @@ previous_override = None
 
 def mouse_event(event: Event):
     global pan_mode, previous_override
-    if event.type == pg.MOUSEMOTION:
-        Cursor.move(event.pos)
+    Cursor.move(event.pos)
 
-    if Global.PALETTE_RECT.collidepoint(event.pos):
-        previous_override = Cursor.override_mode
+    if Global.palette_rect.collidepoint(event.pos):
         Cursor.override_mode = 0
     else:
-        # Cursor.override_mode = previous_override
-        # previous_override = None
-
-        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            Global.set_state = Grid.set_cell(Cursor.cell_pos)
-            Cursor.override_mode = Cursor.mode
-
-        elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
-            Global.set_state = None
-            Cursor.override_mode = None
-            Cursor.move(event.pos)
-
-        # Panning
-
-        elif event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
-            try:
-                Global.camera_click_pos = event.pos
-                pan_mode = True
-            except AttributeError:
-                pass
+        Cursor.override_mode = previous_override
         
-        if pg.mouse.get_pressed()[0]:
-            Grid.set_cell(Cursor.cell_pos, Global.set_state)
+        canvas_click(event)
+
+        previous_override = Cursor.override_mode
 
 
     # Release pan mode regardless of cursor position
@@ -57,4 +37,23 @@ def palette_click(event: Event):
     pass
 
 def canvas_click(event: Event):
-    pass
+    global pan_mode
+    if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+        Global.set_state = Grid.set_cell(Cursor.cell_pos)
+        Cursor.override_mode = Cursor.mode
+
+    elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
+        Global.set_state = None
+        Cursor.override_mode = None
+        Cursor.move(event.pos)
+
+    # Panning
+
+    elif event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
+        try:
+            Global.camera_click_pos = event.pos
+            pan_mode = True
+        except AttributeError: pass
+    
+    if pg.mouse.get_pressed()[0]:
+        Grid.set_cell(Cursor.cell_pos, Global.set_state)

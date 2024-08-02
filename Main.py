@@ -1,5 +1,5 @@
 import pygame as pg
-import Global, Grid, Loop, Cursor
+import Global, Grid, Loop, Cursor, Palette
 
 pg.init()
 
@@ -24,5 +24,6 @@ while running:
     screen.blit(bg_img, (0,0))
     screen.blit(Grid.draw(), (0,0))
     screen.blit(Cursor.draw(), (0,0))
+    screen.blit(Palette.draw(), (0,0))
 
     pg.display.update()
