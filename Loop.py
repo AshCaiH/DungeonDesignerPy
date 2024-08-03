@@ -32,20 +32,14 @@ def tick():
                 for key in Palette.element_types.keys(): Palette.element_types[key] = 4
 
         elif event.type == pg.MOUSEWHEEL:
-            old_world_pos = Global.mouse_to_world(pg.mouse.get_pos())
             old_scale = Global.CELL_SIZE
 
             new_cell_size = Global.CELL_SIZE + (event.y * Global.CELL_SIZE // 8 + (1 - Global.CELL_SIZE % 2))
-            Global.CELL_SIZE = min(new_cell_size, 128)
-            Global.CELL_SIZE = max(Global.CELL_SIZE, 8)
+            Global.CELL_SIZE = max(min(new_cell_size, 128), 8)
             Global.resize_cursor()
 
-            scale = old_scale / Global.CELL_SIZE
-            new_world_pos = old_world_pos * scale
-
-            Global.camera_offset -= old_world_pos - new_world_pos
-            Global.camera_offset.x = int(Global.camera_offset.x)
-            Global.camera_offset.y = int(Global.camera_offset.y)
+            # Credit to this post for inspiration https://stackoverflow.com/a/38302057
+            Global.camera_offset = pg.mouse.get_pos() - (Global.CELL_SIZE / old_scale) * (pg.mouse.get_pos() - Global.camera_offset)
 
         
     return True

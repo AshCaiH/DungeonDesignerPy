@@ -52,6 +52,7 @@ def canvas_click(event: Event):
     elif event.type == pg.MOUSEBUTTONDOWN and event.button == 2:
         try:
             Global.camera_click_pos = event.pos
+            Global.camera_last_offset = Global.camera_offset
             pan_mode = True
         except AttributeError: pass
     
