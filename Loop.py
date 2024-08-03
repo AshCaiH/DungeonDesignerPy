@@ -1,5 +1,5 @@
 from asyncio import Event
-import IO, MouseInput, Grid, Palette
+import IO, MouseInput, Grid, Palette, Global
 import pygame as pg
 import json
 
@@ -30,6 +30,12 @@ def tick():
                 for key in Palette.element_types.keys(): Palette.element_types[key] = 3
             elif event.key == pg.K_4:
                 for key in Palette.element_types.keys(): Palette.element_types[key] = 4
+
+        elif event.type == pg.MOUSEWHEEL:
+            new_cell_size = Global.CELL_SIZE + event.y
+            Global.CELL_SIZE = min(new_cell_size, 128)
+            Global.CELL_SIZE = max(new_cell_size, 8)
+            Global.resize_cursor()
 
         
     return True

@@ -12,6 +12,8 @@ pg.display.set_caption("Dungeon Designer")
 
 bg_img = pg.image.load("assets/images/noisebg.png").convert_alpha()
 
+Global.resize_cursor()
+
 running = True
 while running:
     clock.tick(60)

@@ -1,6 +1,6 @@
 from asyncio import Event
 import pygame as pg
-from pygame import Rect, Vector2
+from pygame import Vector2
 import Global, Grid, Cursor
 
 pan_mode = False

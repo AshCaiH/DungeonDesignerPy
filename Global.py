@@ -25,14 +25,7 @@ set_cell_mode = None
 
 # Static hidden values
 
-hexagon = [
-    Vector2(0,0),
-    Vector2(CURSOR_SIZE, CURSOR_SIZE),
-    Vector2(CELL_SIZE-CURSOR_SIZE, CURSOR_SIZE),
-    Vector2(CELL_SIZE, 0),
-    Vector2(CELL_SIZE-CURSOR_SIZE, -CURSOR_SIZE),
-    Vector2(CURSOR_SIZE, -CURSOR_SIZE),
-]
+hexagon = []
 
 # Functions
 def mouse_to_world(mousepos):
@@ -46,3 +39,17 @@ def mouse_to_cell(mousepos):
 
 def cell_to_screen(cell_coord: Vector2):
     return cell_coord * CELL_SIZE + camera_offset
+
+def resize_cursor():
+    global hexagon, CURSOR_SIZE
+    hexagon = [
+        Vector2(0,0),
+        Vector2(CURSOR_SIZE, CURSOR_SIZE),
+        Vector2(CELL_SIZE-CURSOR_SIZE, CURSOR_SIZE),
+        Vector2(CELL_SIZE, 0),
+        Vector2(CELL_SIZE-CURSOR_SIZE, -CURSOR_SIZE),
+        Vector2(CURSOR_SIZE, -CURSOR_SIZE)
+    ]
+
+    CURSOR_SIZE = CELL_SIZE / 8
+    CURSOR_SIZE += 1 - (CURSOR_SIZE % 2)
