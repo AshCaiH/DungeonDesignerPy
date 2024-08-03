@@ -89,7 +89,7 @@ def draw():
         return tuple(vec + Global.cell_to_screen(cell_pos))
     
     if mode == 1:
-        pg.draw.rect(screen, (255,255,255), (*tuple(Global.cell_to_screen(cell_pos)), *[Global.CELL_SIZE]*2), 1, border_radius=1)
+        pg.draw.rect(screen, (255,255,255), (*tuple(Global.cell_to_screen(cell_pos)), *[Global.CELL_SIZE+1]*2), 1, border_radius=1)
     elif mode == 2:
         pg.draw.lines(screen, (255,255,255), True, list(map(hex_to_screen, Global.hexagon)))
     elif mode == 3:

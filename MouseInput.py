@@ -39,11 +39,11 @@ def palette_click(event: Event):
 def canvas_click(event: Event):
     global pan_mode
     if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-        Global.set_state = Grid.set_cell(Cursor.cell_pos)
+        Global.set_cell_mode = Grid.set_cell(Cursor.cell_pos)
         Cursor.override_mode = Cursor.mode
 
     elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
-        Global.set_state = None
+        Global.set_cell_mode = 2
         Cursor.override_mode = None
         Cursor.move(event.pos)
 
@@ -55,5 +55,5 @@ def canvas_click(event: Event):
             pan_mode = True
         except AttributeError: pass
     
-    if pg.mouse.get_pressed()[0]:
-        Grid.set_cell(Cursor.cell_pos, Global.set_state)
+    elif pg.mouse.get_pressed()[0]:
+        Grid.set_cell(Cursor.cell_pos, Global.set_cell_mode)

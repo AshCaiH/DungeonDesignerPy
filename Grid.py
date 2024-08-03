@@ -1,6 +1,6 @@
 from pygame import Vector2
 import pygame as pg
-import Global, Cursor
+import Global, Cursor, Palette
 
 screen = None
 
@@ -22,7 +22,7 @@ def draw():
 def draw_floors():
     for key in cell_dict.keys():
         if cell_dict[key].get("floor", 0) != 0:
-            pg.draw.rect(screen, (255,255,255, 150),
+            pg.draw.rect(screen, (*Palette.colours[cell_dict[key]["floor"]], 185),
                         pg.Rect(*Global.cell_to_screen(Vector2(*key)), Global.CELL_SIZE, Global.CELL_SIZE))
 
 
@@ -36,11 +36,11 @@ def draw_walls():
 
         if cell_dict[key].get("nwall", 0) != 0:
             endPoint = tuple(Global.cell_to_screen(Vector2(*key) + Vector2(1, 0)))
-            pg.draw.line(screen, (255,255,255), startPoint, endPoint, 5)
+            pg.draw.line(screen, Palette.colours[cell_dict[key]["nwall"]], startPoint, endPoint, 5)
             
         if cell_dict[key].get("wwall", 0) != 0:
             endPoint = tuple(Global.cell_to_screen(Vector2(*key) + Vector2(0, 1)))
-            pg.draw.line(screen, (255,255,255), startPoint, endPoint, 5)
+            pg.draw.line(screen, Palette.colours[cell_dict[key]["wwall"]], startPoint, endPoint, 5)
 
 
 def draw_grid():
@@ -78,7 +78,7 @@ def clean_cells():
 
 
 # Modes: 0 = off, 1 = on, 2 = toggle
-def set_cell(cell_coord, element_state = 2):
+def set_cell(cell_coord, mode = 2):
     global cell_dict
     cell_dict.setdefault((cell_coord.x, cell_coord.y), {})
 
@@ -91,22 +91,25 @@ def set_cell(cell_coord, element_state = 2):
         case 3: element = "wwall" 
         case 4: element = "prop" 
         case _: return
+
+    try:
+        cell_property = cell_dict[(cell_coord.x, cell_coord.y)][element]
+    except KeyError:
+        cell_property = None
     
-    if element_state == 0: cell_dict[(cell_coord.x, cell_coord.y)][element] = 0
-    if element_state == 1: cell_dict[(cell_coord.x, cell_coord.y)][element] = 1
-    if element_state == 2:
-        try:
-            if cell_dict[(cell_coord.x, cell_coord.y)][element] in [0, None]:
-                cell_dict[(cell_coord.x, cell_coord.y)][element] = 1
-                return_state = 1
-            else:
-                cell_dict[(cell_coord.x, cell_coord.y)][element] = 0
-                return_state = 0
-        except KeyError:
-            cell_dict[(cell_coord.x, cell_coord.y)][element] = 1
+    if mode == 0: 
+        cell_dict[(cell_coord.x, cell_coord.y)][element] = 0
+        return_state = 0
+    elif mode == 1: cell_dict[(cell_coord.x, cell_coord.y)][element] = Palette.element_types[element]
+    elif mode == 2:
+        if cell_property is None or cell_property != Palette.element_types[element]:
+            cell_dict[(cell_coord.x, cell_coord.y)][element] = Palette.element_types[element]
             return_state = 1
+        else:
+            cell_dict[(cell_coord.x, cell_coord.y)][element] = 0
+            return_state = 0
     else:
-        cell_dict[(cell_coord.x, cell_coord.y)][element] = element_state
+        cell_dict[(cell_coord.x, cell_coord.y)][element] = Palette.element_types[element]
 
     clean_cells()
 

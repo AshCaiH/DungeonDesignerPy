@@ -21,7 +21,7 @@ camera_click_pos = Vector2(0,0)
 
 palette_rect = Rect(0,SCR_HGHT-PALETTE_HEIGHT,SCR_WDTH, PALETTE_HEIGHT)
 
-set_state = None
+set_cell_mode = None
 
 # Static hidden values
 
