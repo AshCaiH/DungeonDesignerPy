@@ -1,6 +1,5 @@
 from asyncio import Event
-from pygame import Vector2
-import IO, MouseInput, Grid
+import IO, MouseInput, Grid, Palette
 import pygame as pg
 import json
 
@@ -23,6 +22,14 @@ def tick():
                 IO.load_file()
             elif event.key == pg.K_p:
                 print(json.dumps({str(key): value for key, value in Grid.cell_dict.items()}))
+            elif event.key == pg.K_1:
+                for key in Palette.element_types.keys(): Palette.element_types[key] = 1
+            elif event.key == pg.K_2:
+                for key in Palette.element_types.keys(): Palette.element_types[key] = 2
+            elif event.key == pg.K_3:
+                for key in Palette.element_types.keys(): Palette.element_types[key] = 3
+            elif event.key == pg.K_4:
+                for key in Palette.element_types.keys(): Palette.element_types[key] = 4
 
         
     return True
