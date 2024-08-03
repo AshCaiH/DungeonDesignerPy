@@ -22,7 +22,7 @@ def draw():
 def draw_floors():
     for key in cell_dict.keys():
         if cell_dict[key].get("floor", 0) != 0:
-            pg.draw.rect(screen, (*Palette.colours[cell_dict[key]["floor"]], 140),
+            pg.draw.rect(screen, (*Palette.colours[cell_dict[key]["floor"]], 185),
                         pg.Rect(*Global.cell_to_screen(Vector2(*key)), Global.CELL_SIZE, Global.CELL_SIZE))
 
 
@@ -31,7 +31,7 @@ def draw_props():
 
 
 def draw_walls():
-    wall_width = int(Global.CELL_SIZE / 8 + (1 - Global.CELL_SIZE % 2))
+    wall_width = max(1, int(Global.CELL_SIZE / 8 + (1 - Global.CELL_SIZE % 2)))
 
     for key in cell_dict.keys():
         startPoint = tuple(Global.cell_to_screen(Vector2(*key)))

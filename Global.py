@@ -32,6 +32,9 @@ def mouse_to_world(mousepos):
     mousepos = Vector2(mousepos[0], mousepos[1])
     return mousepos - camera_offset
 
+def world_to_mouse(worldpos):
+    return worldpos + camera_offset
+
 def mouse_to_cell(mousepos):
     world_pos = mouse_to_world(mousepos)
     cell_pos = Vector2(world_pos.x // CELL_SIZE, world_pos.y // CELL_SIZE)
