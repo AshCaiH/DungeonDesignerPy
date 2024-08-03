@@ -2,35 +2,42 @@ from pygame import Vector2
 import pygame as pg
 import Global, Cursor, Palette
 
-screen = None
-
 cell_dict : dict = {}
 
+def make_surface():
+    return pg.Surface((Global.SCR_WDTH, Global.SCR_HGHT), pg.SRCALPHA)
 
 def draw():
-    global screen
+    surfaces = []
     screen = pg.Surface((Global.SCR_WDTH, Global.SCR_HGHT), pg.SRCALPHA)
 
-    draw_floors()
-    draw_props()
-    draw_grid()
-    draw_walls()
+    surfaces.append(draw_frame())
+    if Global.layers["floors"]: surfaces.append(draw_floors())
+    if Global.layers["props"]: surfaces.append(draw_props())
+    if Global.layers["walls"]: surfaces.append(draw_walls())
+    if Global.layers["grid"]: surfaces.append(draw_grid())
+
+    for surface in surfaces: screen.blit(surface, (0,0))
 
     return screen
 
 
 def draw_floors():
+    surface = make_surface()
     for key in cell_dict.keys():
         if cell_dict[key].get("floor", 0) != 0:
-            pg.draw.rect(screen, (*Palette.colours[cell_dict[key]["floor"]], 185),
+            pg.draw.rect(surface, (*Palette.colours[cell_dict[key]["floor"]], 185),
                         pg.Rect(*Global.cell_to_screen(Vector2(*key)), Global.CELL_SIZE, Global.CELL_SIZE))
+    return surface
 
 
 def draw_props():
-    pass
+    surface = make_surface()
+    return surface
 
 
 def draw_walls():
+    surface = make_surface()
     wall_width = max(1, int(Global.CELL_SIZE / 8 + (1 - Global.CELL_SIZE % 2)))
 
     for key in cell_dict.keys():
@@ -38,26 +45,36 @@ def draw_walls():
 
         if cell_dict[key].get("nwall", 0) != 0:
             endPoint = tuple(Global.cell_to_screen(Vector2(*key) + Vector2(1, 0)))
-            pg.draw.line(screen, Palette.colours[cell_dict[key]["nwall"]], startPoint, endPoint, wall_width)
+            pg.draw.line(surface, Palette.colours[cell_dict[key]["nwall"]], startPoint, endPoint, wall_width)
             
         if cell_dict[key].get("wwall", 0) != 0:
             endPoint = tuple(Global.cell_to_screen(Vector2(*key) + Vector2(0, 1)))
-            pg.draw.line(screen, Palette.colours[cell_dict[key]["wwall"]], startPoint, endPoint, wall_width)
+            pg.draw.line(surface, Palette.colours[cell_dict[key]["wwall"]], startPoint, endPoint, wall_width)
+    return surface
 
 
 def draw_grid():
     global cell_dict
+    surface = make_surface()
     # Remove unused cells from dict    
 
     for i in range(Global.COLS + 1):
         x = i * Global.CELL_SIZE + Global.camera_offset.x
-        pg.draw.line(screen, Global.GRID_COLOUR, 
+        pg.draw.line(surface, Global.GRID_COLOUR, 
                      (x, Global.camera_offset.y), (x, Global.ROWS * Global.CELL_SIZE + Global.camera_offset.y))
         
     for i in range(Global.ROWS + 1):
         y = i * Global.CELL_SIZE + Global.camera_offset.y
-        pg.draw.line(screen, Global.GRID_COLOUR, 
-                     (0 + Global.camera_offset.x, y), (Global.COLS * Global.CELL_SIZE + Global.camera_offset.x, y))
+        pg.draw.line(surface, Global.GRID_COLOUR, 
+                     (Global.camera_offset.x, y), (Global.COLS * Global.CELL_SIZE + Global.camera_offset.x, y))
+    return surface
+
+
+def draw_frame():
+    surface = make_surface()
+    pg.draw.rect(surface, Global.GRID_COLOUR, 
+                 pg.Rect(*Global.camera_offset, Global.CELL_SIZE * Global.COLS, Global.CELL_SIZE * Global.ROWS), 3)
+    return surface
 
 
 def add_floor(cell_coord):

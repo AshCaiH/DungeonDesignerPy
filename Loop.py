@@ -22,6 +22,8 @@ def tick():
                 IO.load_file()
             elif event.key == pg.K_p:
                 print(json.dumps({str(key): value for key, value in Grid.cell_dict.items()}))
+            elif event.key == pg.K_g:
+                Global.layers["grid"] = not Global.layers["grid"]
             elif event.key == pg.K_1:
                 for key in Palette.element_types.keys(): Palette.element_types[key] = 1
             elif event.key == pg.K_2:

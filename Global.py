@@ -19,6 +19,8 @@ camera_offset = Vector2(10,10)
 camera_last_offset = camera_offset
 camera_click_pos = Vector2(0,0)
 
+layers = {"grid": True, "floors": True, "walls": True, "props": True}
+
 palette_rect = Rect(0,SCR_HGHT-PALETTE_HEIGHT,SCR_WDTH, PALETTE_HEIGHT)
 
 set_cell_mode = None
