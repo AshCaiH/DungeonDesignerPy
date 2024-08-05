@@ -4,6 +4,23 @@ import Global, Cursor, Palette
 
 cell_dict : dict = {}
 
+# Temporarily hard coded
+elements_dict : dict = {
+    "floors": {
+        1: {"name": "ground", "tags": ["solid"]},
+        2: {"name": "water", "tags": ["water"]},
+        3: {"name": "stone", "tags": ["solid"]},
+        4: {"name": "carpet", "tags": ["solid"]},
+    },
+    "walls": {
+        1: {"name": "normal", "tags": ["solid"]},
+        2: {"name": "window", "tags": ["solid"]},
+        3: {"name": "archway", "tags": ["nonsolid"]},
+        4: {"name": "door", "tags": ["solid"]}
+    },
+    "props": {}
+}
+
 def make_surface():
     return pg.Surface((Global.SCR_WDTH, Global.SCR_HGHT), pg.SRCALPHA)
 
