@@ -116,7 +116,7 @@ def clean_cells():
 # Modes: 0 = off, 1 = on, 2 = toggle
 def set_cell(cell_coord, mode = 2):
     global cell_dict
-    cell_dict.setdefault((cell_coord.x, cell_coord.y), {})
+    cell_dict.setdefault((int(cell_coord.x), int(cell_coord.y)), {})
 
     element = None
     return_state = None
