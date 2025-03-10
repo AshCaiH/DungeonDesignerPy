@@ -10,7 +10,7 @@ COLS = 10
 CELL_SIZE = 32
 WALL_COLLISION = 3
 GRID_COLOUR = (0,0,0, 100)
-CURSOR_SIZE = 5
+CURSOR_SIZE = 12
 PALETTE_HEIGHT = 100
 
 # Runtime values
@@ -18,6 +18,8 @@ PALETTE_HEIGHT = 100
 camera_offset = Vector2(10,10)
 camera_last_offset = camera_offset
 camera_click_pos = Vector2(0,0)
+
+mouse_position = Vector2(0,0)
 
 layers = {"grid": True, "floors": True, "walls": True, "props": True}
 
@@ -30,15 +32,15 @@ set_cell_mode = None
 hexagon = []
 
 # Functions
-def mouse_to_world(mousepos):
-    mousepos = Vector2(mousepos[0], mousepos[1])
+def mouse_to_world():
+    mousepos = Vector2(mouse_position[0], mouse_position[1])
     return mousepos - camera_offset
 
 def world_to_mouse(worldpos):
     return worldpos + camera_offset
 
-def mouse_to_cell(mousepos):
-    world_pos = mouse_to_world(mousepos)
+def mouse_to_cell():
+    world_pos = mouse_to_world()
     cell_pos = Vector2(world_pos.x // CELL_SIZE, world_pos.y // CELL_SIZE)
     return cell_pos
 

@@ -31,8 +31,8 @@ def get_cursor_type():
         
         def check_near_wall(inner_pos_axis, offset_axis):
             if inner_pos_axis > Global.CELL_SIZE - Global.CURSOR_SIZE:
-                if offset_axis == "x": offset.x = 1
-                elif offset_axis == "y": offset.y = 1
+                if offset_axis == "x": offset.x = Global.CURSOR_SIZE // 2
+                elif offset_axis == "y": offset.y = Global.CURSOR_SIZE // 2
                 return True
             elif inner_pos_axis < Global.CURSOR_SIZE: return True
             else: return False    
@@ -69,7 +69,8 @@ def get_cursor_type():
 
 def move(mouse_pos):
     global cell_pos, inner_pos, mode, previous_mode
-    cell_pos = Global.mouse_to_cell(mouse_pos)
+    Global.mouse_position = mouse_pos
+    cell_pos = Global.mouse_to_cell()
     inner_pos = (mouse_pos - Global.camera_offset)
     inner_pos = Vector2(inner_pos.x % Global.CELL_SIZE, inner_pos.y % Global.CELL_SIZE)
 
